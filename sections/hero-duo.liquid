@@ -1,12 +1,12 @@
 {% comment %}
-  Hero Duo Section - Links Sauna / Rechts Red-Light
+  Hero Duo Section - Volledig bewerkbaar via Theme Editor
 {% endcomment %}
 
-<section class="hero-duo">
+<section class="hero-duo" style="background: linear-gradient(135deg, {{ section.settings.bg_color_1 | default: 'var(--primary)' }} 0%, {{ section.settings.bg_color_2 | default: 'var(--accent)' }} 100%);">
   <div class="container">
     <div class="hero-duo__grid">
       <!-- Sauna Panel -->
-      <div class="hero-duo__panel hero-duo__panel--sauna">
+      <div class="hero-duo__panel hero-duo__panel--sauna" style="background: {{ section.settings.sauna_panel_bg | default: 'rgba(255, 255, 255, 0.1)' }};">
         {% if section.settings.sauna_image != blank %}
           <div class="hero-duo__image">
             <img 
@@ -18,10 +18,10 @@
         {% endif %}
         
         <div class="hero-duo__content">
-          <h2 class="hero-duo__title">{{ section.settings.sauna_title | default: "Barrelsauna" }}</h2>
-          <p class="hero-duo__text">{{ section.settings.sauna_text | default: "Diepe warmte. Buitenlucht. Reset lichaam & hoofd." }}</p>
+          <h2 class="hero-duo__title" style="color: {{ section.settings.sauna_title_color | default: 'white' }};">{{ section.settings.sauna_title | default: "Barrelsauna" }}</h2>
+          <p class="hero-duo__text" style="color: {{ section.settings.sauna_text_color | default: 'rgba(255,255,255,0.9)' }};">{{ section.settings.sauna_text | default: "Diepe warmte. Buitenlucht. Reset lichaam & hoofd." }}</p>
           
-          <div class="hero-duo__price">
+          <div class="hero-duo__price" style="color: {{ section.settings.sauna_price_color | default: 'var(--highlight)' }};">
             {% if section.settings.sauna_product != blank %}
               Vanaf {{ section.settings.sauna_product.price | money }}
             {% else %}
@@ -29,14 +29,14 @@
             {% endif %}
           </div>
           
-          <a href="{% if section.settings.sauna_product != blank %}{{ section.settings.sauna_product.url }}{% else %}{{ section.settings.sauna_cta_url }}{% endif %}" class="btn">
+          <a href="{% if section.settings.sauna_product != blank %}{{ section.settings.sauna_product.url }}{% else %}{{ section.settings.sauna_cta_url }}{% endif %}" class="btn" style="background-color: {{ section.settings.sauna_cta_color | default: 'var(--accent)' }};">
             {{ section.settings.sauna_cta | default: "Bekijk Barrelsauna" }}
           </a>
         </div>
       </div>
       
       <!-- Red-Light Panel -->
-      <div class="hero-duo__panel hero-duo__panel--redlight">
+      <div class="hero-duo__panel hero-duo__panel--redlight" style="background: {{ section.settings.rl_panel_bg | default: 'rgba(230, 57, 70, 0.1)' }};">
         {% if section.settings.rl_image != blank %}
           <div class="hero-duo__image">
             <img 
@@ -48,10 +48,10 @@
         {% endif %}
         
         <div class="hero-duo__content">
-          <h2 class="hero-duo__title">{{ section.settings.rl_title | default: "Red-Light Therapie" }}</h2>
-          <p class="hero-duo__text">{{ section.settings.rl_text | default: "Licht dat aanzet tot herstel. Minuten werk, effect de hele dag." }}</p>
+          <h2 class="hero-duo__title" style="color: {{ section.settings.rl_title_color | default: 'white' }};">{{ section.settings.rl_title | default: "Red-Light Therapie" }}</h2>
+          <p class="hero-duo__text" style="color: {{ section.settings.rl_text_color | default: 'rgba(255,255,255,0.9)' }};">{{ section.settings.rl_text | default: "Licht dat aanzet tot herstel. Minuten werk, effect de hele dag." }}</p>
           
-          <div class="hero-duo__price">
+          <div class="hero-duo__price" style="color: {{ section.settings.rl_price_color | default: 'var(--highlight)' }};">
             {% if section.settings.rl_product != blank %}
               Vanaf {{ section.settings.rl_product.price | money }}
             {% else %}
@@ -59,7 +59,7 @@
             {% endif %}
           </div>
           
-          <a href="{% if section.settings.rl_product != blank %}{{ section.settings.rl_product.url }}{% else %}{{ section.settings.rl_cta_url }}{% endif %}" class="btn">
+          <a href="{% if section.settings.rl_product != blank %}{{ section.settings.rl_product.url }}{% else %}{{ section.settings.rl_cta_url }}{% endif %}" class="btn" style="background-color: {{ section.settings.rl_cta_color | default: 'var(--accent)' }};">
             {{ section.settings.rl_cta | default: "Bekijk apparaten" }}
           </a>
         </div>
@@ -71,7 +71,6 @@
 <style>
 .hero-duo {
   padding: 4rem 0;
-  background: var(--primary);
   color: white;
 }
 
@@ -83,7 +82,6 @@
 }
 
 .hero-duo__panel {
-  background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius);
   overflow: hidden;
   position: relative;
@@ -121,18 +119,12 @@
   font-size: 1.125rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
-  opacity: 0.9;
 }
 
 .hero-duo__price {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--highlight);
   margin-bottom: 2rem;
-}
-
-.hero-duo__panel--redlight {
-  background: rgba(230, 57, 70, 0.1);
 }
 
 @media (max-width: 900px) {
@@ -157,6 +149,22 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_1",
+      "label": "Background color 1",
+      "default": "#0E0E0E"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_2",
+      "label": "Background color 2",
+      "default": "#E63946"
+    },
     {
       "type": "header",
       "content": "Sauna Panel"
@@ -192,13 +200,44 @@
     {
       "type": "url",
       "id": "sauna_cta_url",
-      "label": "Sauna CTA URL"
+      "label": "Sauna CTA URL",
+      "default": "/collections/barrelsauna"
     },
     {
       "type": "text",
       "id": "sauna_cta",
       "label": "Sauna CTA text",
       "default": "Bekijk Barrelsauna"
+    },
+    {
+      "type": "color",
+      "id": "sauna_panel_bg",
+      "label": "Sauna panel background",
+      "default": "rgba(255, 255, 255, 0.1)"
+    },
+    {
+      "type": "color",
+      "id": "sauna_title_color",
+      "label": "Sauna title color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "sauna_text_color",
+      "label": "Sauna text color",
+      "default": "rgba(255,255,255,0.9)"
+    },
+    {
+      "type": "color",
+      "id": "sauna_price_color",
+      "label": "Sauna price color",
+      "default": "#FFD700"
+    },
+    {
+      "type": "color",
+      "id": "sauna_cta_color",
+      "label": "Sauna CTA color",
+      "default": "#E63946"
     },
     {
       "type": "header",
@@ -235,13 +274,44 @@
     {
       "type": "url",
       "id": "rl_cta_url",
-      "label": "Red-Light CTA URL"
+      "label": "Red-Light CTA URL",
+      "default": "/collections/red-light"
     },
     {
       "type": "text",
       "id": "rl_cta",
       "label": "Red-Light CTA text",
       "default": "Bekijk apparaten"
+    },
+    {
+      "type": "color",
+      "id": "rl_panel_bg",
+      "label": "Red-Light panel background",
+      "default": "rgba(230, 57, 70, 0.1)"
+    },
+    {
+      "type": "color",
+      "id": "rl_title_color",
+      "label": "Red-Light title color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "rl_text_color",
+      "label": "Red-Light text color",
+      "default": "rgba(255,255,255,0.9)"
+    },
+    {
+      "type": "color",
+      "id": "rl_price_color",
+      "label": "Red-Light price color",
+      "default": "#FFD700"
+    },
+    {
+      "type": "color",
+      "id": "rl_cta_color",
+      "label": "Red-Light CTA color",
+      "default": "#E63946"
     }
   ],
   "presets": [
