@@ -1,0 +1,22 @@
+name: Deploy to Shopify
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Create ZIP
+      run: |
+        zip -r theme.zip . -x "*.DS_Store" "*/.*" ".git/*" ".github/*"
+    
+    - name: Upload to GitHub Releases
+      uses: actions/upload-artifact@v3
+      with:
+        name: theme-zip
+        path: theme.zip
