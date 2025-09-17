@@ -1,0 +1,55 @@
+<header class="header">
+  <div class="container">
+    <div class="header__content">
+      <div class="header__logo">
+        {% if settings.logo != blank %}
+          <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}">
+        {% else %}
+          <h1>{{ shop.name }}</h1>
+        {% endif %}
+      </div>
+      
+      <nav class="header__nav">
+        <ul>
+          <li><a href="/collections/barrelsauna">Barrelsauna</a></li>
+          <li><a href="/collections/huissauna">Huissauna</a></li>
+          <li><a href="/collections/red-light">Red-Light Therapie</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header__actions">
+        <a href="/cart" class="btn">Cart ({{ cart.item_count }})</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+.header {
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 1rem 0;
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__nav ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.header__nav a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.header__nav a:hover {
+  color: var(--accent);
+}
+</style>

@@ -1,0 +1,337 @@
+{% comment %}
+  Hero Split Section - 2 tegels barrelsauna vs huissauna met product pickers
+{% endcomment %}
+
+<section class="hero-split">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <div class="text-center mb-4">
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+        {% if section.settings.subheading != blank %}
+          <p class="hero-split__subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    <div class="hero-split__grid">
+      <!-- Barrelsauna Tile -->
+      <div class="hero-split__tile hero-split__tile--barrel">
+        {% if section.settings.barrel_image != blank %}
+          <div class="hero-split__image">
+            <img 
+              src="{{ section.settings.barrel_image | image_url: width: 600 }}"
+              alt="{{ section.settings.barrel_image.alt | escape }}"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+        
+        <div class="hero-split__content">
+          <div class="kicker mb-2">{{ section.settings.barrel_kicker | default: "Buitensauna" }}</div>
+          <h3 class="h2 mb-2">{{ section.settings.barrel_title | default: "Barrelsauna" }}</h3>
+          <p class="hero-split__description mb-3">{{ section.settings.barrel_description }}</p>
+          
+          {% if section.settings.barrel_features != blank %}
+            <ul class="hero-split__features mb-3">
+              {% assign features = section.settings.barrel_features | split: ',' %}
+              {% for feature in features %}
+                <li>{{ feature | strip }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          
+          <div class="hero-split__ctas">
+            {% if section.settings.barrel_cta_text != blank and section.settings.barrel_cta_url != blank %}
+              <a href="{{ section.settings.barrel_cta_url }}" class="btn">
+                {{ section.settings.barrel_cta_text }}
+              </a>
+            {% endif %}
+            
+            {% if section.settings.barrel_collection != blank %}
+              <a href="{{ section.settings.barrel_collection.url }}" class="btn btn-secondary">
+                Bekijk collectie
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Huissauna Tile -->
+      <div class="hero-split__tile hero-split__tile--indoor">
+        {% if section.settings.indoor_image != blank %}
+          <div class="hero-split__image">
+            <img 
+              src="{{ section.settings.indoor_image | image_url: width: 600 }}"
+              alt="{{ section.settings.indoor_image.alt | escape }}"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+        
+        <div class="hero-split__content">
+          <div class="kicker mb-2">{{ section.settings.indoor_kicker | default: "Binnensauna" }}</div>
+          <h3 class="h2 mb-2">{{ section.settings.indoor_title | default: "Huissauna" }}</h3>
+          <p class="hero-split__description mb-3">{{ section.settings.indoor_description }}</p>
+          
+          {% if section.settings.indoor_features != blank %}
+            <ul class="hero-split__features mb-3">
+              {% assign features = section.settings.indoor_features | split: ',' %}
+              {% for feature in features %}
+                <li>{{ feature | strip }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          
+          <div class="hero-split__ctas">
+            {% if section.settings.indoor_cta_text != blank and section.settings.indoor_cta_url != blank %}
+              <a href="{{ section.settings.indoor_cta_url }}" class="btn">
+                {{ section.settings.indoor_cta_text }}
+              </a>
+            {% endif %}
+            
+            {% if section.settings.indoor_collection != blank %}
+              <a href="{{ section.settings.indoor_collection.url }}" class="btn btn-secondary">
+                Bekijk collectie
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero-split {
+  padding: 4rem 0;
+  background: var(--bg);
+}
+
+.hero-split__subheading {
+  font-size: 1.125rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+.hero-split__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.hero-split__tile {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-split__tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.hero-split__image {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+
+.hero-split__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-split__content {
+  padding: 2rem;
+}
+
+.hero-split__description {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.hero-split__features {
+  list-style: none;
+  padding: 0;
+}
+
+.hero-split__features li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.hero-split__features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.hero-split__ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero-split__ctas .btn {
+  flex: 1;
+  min-width: 140px;
+}
+
+@media (max-width: 768px) {
+  .hero-split {
+    padding: 2rem 0;
+  }
+  
+  .hero-split__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .hero-split__content {
+    padding: 1.5rem;
+  }
+  
+  .hero-split__ctas {
+    flex-direction: column;
+  }
+  
+  .hero-split__ctas .btn {
+    flex: none;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Hero Split",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Kies jouw perfecte sauna"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Buiten of binnen, traditioneel of modern. Vind de sauna die bij jouw levensstijl past."
+    },
+    {
+      "type": "header",
+      "content": "Barrelsauna (Buiten)"
+    },
+    {
+      "type": "image_picker",
+      "id": "barrel_image",
+      "label": "Barrelsauna image"
+    },
+    {
+      "type": "text",
+      "id": "barrel_kicker",
+      "label": "Barrelsauna kicker",
+      "default": "Buitensauna"
+    },
+    {
+      "type": "text",
+      "id": "barrel_title",
+      "label": "Barrelsauna title",
+      "default": "Barrelsauna"
+    },
+    {
+      "type": "textarea",
+      "id": "barrel_description",
+      "label": "Barrelsauna description",
+      "default": "Traditionele ronde vorm, optimale warmteverdeling. Perfect voor in de tuin."
+    },
+    {
+      "type": "textarea",
+      "id": "barrel_features",
+      "label": "Barrelsauna features (comma separated)",
+      "default": "Ronde vorm, Natuurlijke houtsoorten, Weerbestendig, Eenvoudige montage"
+    },
+    {
+      "type": "text",
+      "id": "barrel_cta_text",
+      "label": "Barrelsauna CTA text",
+      "default": "Bekijk barrelsauna's"
+    },
+    {
+      "type": "url",
+      "id": "barrel_cta_url",
+      "label": "Barrelsauna CTA URL",
+      "default": "/collections/barrelsauna"
+    },
+    {
+      "type": "collection",
+      "id": "barrel_collection",
+      "label": "Barrelsauna collection"
+    },
+    {
+      "type": "header",
+      "content": "Huissauna (Binnen)"
+    },
+    {
+      "type": "image_picker",
+      "id": "indoor_image",
+      "label": "Huissauna image"
+    },
+    {
+      "type": "text",
+      "id": "indoor_kicker",
+      "label": "Huissauna kicker",
+      "default": "Binnensauna"
+    },
+    {
+      "type": "text",
+      "id": "indoor_title",
+      "label": "Huissauna title",
+      "default": "Huissauna"
+    },
+    {
+      "type": "textarea",
+      "id": "indoor_description",
+      "label": "Huissauna description",
+      "default": "Moderne rechthoekige vorm, perfect voor binnen. Maximale ruimtebenutting."
+    },
+    {
+      "type": "textarea",
+      "id": "indoor_features",
+      "label": "Huissauna features (comma separated)",
+      "default": "Rechthoekige vorm, Moderne afwerking, Binnen installatie, Ruimtebesparend"
+    },
+    {
+      "type": "text",
+      "id": "indoor_cta_text",
+      "label": "Huissauna CTA text",
+      "default": "Bekijk huissauna's"
+    },
+    {
+      "type": "url",
+      "id": "indoor_cta_url",
+      "label": "Huissauna CTA URL",
+      "default": "/collections/huissauna"
+    },
+    {
+      "type": "collection",
+      "id": "indoor_collection",
+      "label": "Huissauna collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Split"
+    }
+  ]
+}
+{% endschema %}

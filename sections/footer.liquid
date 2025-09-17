@@ -1,0 +1,98 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__content">
+      <div class="footer__brand">
+        <h3>{{ shop.name }}</h3>
+        <p>Stop met uitstellen → start met herstellen.</p>
+      </div>
+      
+      <div class="footer__links">
+        <div>
+          <h4>Producten</h4>
+          <ul>
+            <li><a href="/collections/barrelsauna">Barrelsauna</a></li>
+            <li><a href="/collections/huissauna">Huissauna</a></li>
+            <li><a href="/collections/red-light">Red-Light Therapie</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4>Support</h4>
+          <ul>
+            <li><a href="/pages/contact">Contact</a></li>
+            <li><a href="/pages/faq">FAQ</a></li>
+            <li><a href="/pages/leveranciers">Leveranciers</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer__bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Alle rechten voorbehouden.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+.footer {
+  background: var(--primary);
+  color: white;
+  padding: 3rem 0 1rem;
+  margin-top: 4rem;
+}
+
+.footer__content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.footer__brand h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.footer__links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.footer__links h4 {
+  margin-bottom: 1rem;
+  color: var(--highlight);
+}
+
+.footer__links ul {
+  list-style: none;
+}
+
+.footer__links a {
+  color: white;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.footer__links a:hover {
+  opacity: 1;
+}
+
+.footer__bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1rem;
+  text-align: center;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .footer__content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .footer__links {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

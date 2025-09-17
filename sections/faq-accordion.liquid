@@ -1,0 +1,251 @@
+{% comment %}
+  FAQ Accordion Section - FAQ sectie met accordion functionaliteit
+{% endcomment %}
+
+<section class="faq-accordion">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <div class="text-center mb-4">
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+        {% if section.settings.subheading != blank %}
+          <p class="faq-accordion__subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    <div class="faq-accordion__list">
+      {% for block in section.blocks %}
+        <details class="faq-item" {{ block.shopify_attributes }}>
+          <summary class="faq-item__question">
+            <span>{{ block.settings.question }}</span>
+            <span class="faq-item__icon">+</span>
+          </summary>
+          <div class="faq-item__answer">
+            <div class="faq-item__content">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.faq-accordion {
+  padding: 4rem 0;
+  background: white;
+}
+
+.faq-accordion__subheading {
+  font-size: 1.125rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+.faq-accordion__list {
+  max-width: 800px;
+  margin: 3rem auto 0;
+}
+
+.faq-item {
+  border: 1px solid #e5e5e5;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.faq-item:hover {
+  border-color: var(--accent);
+}
+
+.faq-item[open] {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(230, 57, 70, 0.1);
+}
+
+.faq-item__question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--primary);
+  list-style: none;
+  transition: all 0.2s ease;
+}
+
+.faq-item__question:hover {
+  background: #f8f9fa;
+}
+
+.faq-item[open] .faq-item__question {
+  background: var(--accent);
+  color: white;
+}
+
+.faq-item__icon {
+  font-size: 1.5rem;
+  font-weight: 300;
+  transition: transform 0.2s ease;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.faq-item[open] .faq-item__icon {
+  transform: rotate(45deg);
+}
+
+.faq-item__answer {
+  padding: 0 1.5rem;
+  background: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-item[open] .faq-item__answer {
+  padding: 1.5rem;
+  max-height: 500px;
+}
+
+.faq-item__content {
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.faq-item__content p {
+  margin-bottom: 1rem;
+}
+
+.faq-item__content p:last-child {
+  margin-bottom: 0;
+}
+
+.faq-item__content ul,
+.faq-item__content ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.faq-item__content li {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .faq-accordion {
+    padding: 2rem 0;
+  }
+  
+  .faq-accordion__list {
+    margin-top: 2rem;
+  }
+  
+  .faq-item__question {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  .faq-item[open] .faq-item__answer {
+    padding: 1rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Veelgestelde vragen"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Alles wat je moet weten over onze sauna's en Red-Light therapie apparaten."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Hoe lang duurt de levering?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>De levering duurt 2-4 weken na bestelling. We houden je op de hoogte van de status via email.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Accordion",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hoe lang duurt de levering?",
+            "answer": "<p>De levering duurt 2-4 weken na bestelling. We houden je op de hoogte van de status via email.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Is installatie inbegrepen?",
+            "answer": "<p>Ja, professionele installatie is inbegrepen bij alle sauna's. Onze monteurs komen bij je thuis om alles perfect in te stellen.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Welke garantie krijg ik?",
+            "answer": "<p>Alle sauna's hebben 2 jaar garantie op constructie en 5 jaar op de verwarmingselementen. Red-Light apparaten hebben 3 jaar garantie.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Kan ik de sauna buiten plaatsen?",
+            "answer": "<p>Barrelsauna's zijn speciaal ontworpen voor buiten. Huissauna's zijn bedoeld voor binnen. We adviseren je graag over de beste locatie.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Hoeveel stroom verbruikt een sauna?",
+            "answer": "<p>Een gemiddelde sauna verbruikt 3-6 kW tijdens opwarmen en 1-2 kW tijdens gebruik. Dit komt neer op ongeveer €2-4 per sessie.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Wat is Red-Light therapie?",
+            "answer": "<p>Red-Light therapie gebruikt specifieke golflengten van licht om celregeneratie te stimuleren. Wetenschappelijk bewezen voor huid, spieren en herstel.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
