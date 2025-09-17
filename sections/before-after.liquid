@@ -1,0 +1,396 @@
+{% comment %}
+  Before/After Gallery Section - Sfeerbeelden en projecten
+{% endcomment %}
+
+<section class="before-after" style="background-color: {{ section.settings.bg_color | default: 'white' }};">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <div class="text-center mb-4">
+        <h2 class="h2" style="color: {{ section.settings.heading_color | default: 'var(--primary)' }};">{{ section.settings.heading }}</h2>
+        {% if section.settings.subheading != blank %}
+          <p class="before-after__subheading" style="color: {{ section.settings.subheading_color | default: 'var(--muted)' }};">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    <div class="before-after__gallery">
+      {% for block in section.blocks %}
+        <div class="before-after__item" {{ block.shopify_attributes }}>
+          <div class="before-after__images">
+            {% if block.settings.before_image != blank %}
+              <div class="before-after__image before-after__image--before">
+                <img 
+                  src="{{ block.settings.before_image | image_url: '800x' }}"
+                  alt="Voor: {{ block.settings.title | escape }}"
+                  loading="lazy"
+                >
+                <div class="before-after__label before-after__label--before">Voor</div>
+              </div>
+            {% endif %}
+            
+            {% if block.settings.after_image != blank %}
+              <div class="before-after__image before-after__image--after">
+                <img 
+                  src="{{ block.settings.after_image | image_url: '800x' }}"
+                  alt="Na: {{ block.settings.title | escape }}"
+                  loading="lazy"
+                >
+                <div class="before-after__label before-after__label--after">Na</div>
+              </div>
+            {% endif %}
+          </div>
+          
+          <div class="before-after__content">
+            <h3 class="before-after__title" style="color: {{ block.settings.title_color | default: 'var(--primary)' }};">
+              {{ block.settings.title }}
+            </h3>
+            
+            {% if block.settings.description != blank %}
+              <p class="before-after__description" style="color: {{ block.settings.description_color | default: 'var(--muted)' }};">
+                {{ block.settings.description }}
+              </p>
+            {% endif %}
+            
+            <div class="before-after__meta">
+              {% if block.settings.location != blank %}
+                <span class="before-after__location" style="color: {{ block.settings.meta_color | default: 'var(--accent)' }};">
+                  📍 {{ block.settings.location }}
+                </span>
+              {% endif %}
+              
+              {% if block.settings.date != blank %}
+                <span class="before-after__date" style="color: {{ block.settings.meta_color | default: 'var(--accent)' }};">
+                  📅 {{ block.settings.date }}
+                </span>
+              {% endif %}
+            </div>
+            
+            {% if block.settings.link_url != blank and block.settings.link_text != blank %}
+              <a href="{{ block.settings.link_url }}" class="btn btn-secondary" style="border-color: {{ block.settings.link_color | default: 'var(--text)' }}; color: {{ block.settings.link_color | default: 'var(--text)' }};">
+                {{ block.settings.link_text }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    {% if section.settings.cta_text != blank and section.settings.cta_url != blank %}
+      <div class="text-center mt-4">
+        <a href="{{ section.settings.cta_url }}" class="btn">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+.before-after {
+  padding: 4rem 0;
+}
+
+.before-after__subheading {
+  font-size: 1.125rem;
+  margin-top: 1rem;
+}
+
+.before-after__gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.before-after__item {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.before-after__item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.before-after__images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  position: relative;
+}
+
+.before-after__image {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.before-after__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.before-after__item:hover .before-after__image img {
+  transform: scale(1.05);
+}
+
+.before-after__label {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: calc(var(--radius) / 2);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: white;
+  z-index: 2;
+}
+
+.before-after__label--before {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.before-after__label--after {
+  background: var(--accent);
+}
+
+.before-after__content {
+  padding: 2rem;
+}
+
+.before-after__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.before-after__description {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.before-after__meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.before-after__location,
+.before-after__date {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .before-after {
+    padding: 2rem 0;
+  }
+  
+  .before-after__gallery {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .before-after__images {
+    grid-template-columns: 1fr;
+  }
+  
+  .before-after__content {
+    padding: 1.5rem;
+  }
+  
+  .before-after__meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Before/After Gallery",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Echte projecten, echte resultaten"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Bekijk hoe onze sauna's de levensstijl van onze klanten hebben veranderd"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#0E0E0E"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#666666"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Section CTA text",
+      "default": "Bekijk alle projecten"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Section CTA URL",
+      "default": "/pages/projecten"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "project",
+      "name": "Project",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Moderne barrelsauna in Amsterdam"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Een prachtige barrelsauna geïnstalleerd in de achtertuin van een gezin in Amsterdam. Perfect voor ontspanning na een drukke werkdag."
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "Amsterdam, Noord-Holland"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "Maart 2024"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Bekijk project"
+        },
+        {
+          "type": "header",
+          "content": "Images"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Before image"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image",
+          "label": "After image"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#0E0E0E"
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description color",
+          "default": "#666666"
+        },
+        {
+          "type": "color",
+          "id": "meta_color",
+          "label": "Meta color",
+          "default": "#E63946"
+        },
+        {
+          "type": "color",
+          "id": "link_color",
+          "label": "Link color",
+          "default": "#111111"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before/After Gallery",
+      "blocks": [
+        {
+          "type": "project",
+          "settings": {
+            "title": "Moderne barrelsauna in Amsterdam",
+            "description": "Een prachtige barrelsauna geïnstalleerd in de achtertuin van een gezin in Amsterdam. Perfect voor ontspanning na een drukke werkdag.",
+            "location": "Amsterdam, Noord-Holland",
+            "date": "Maart 2024",
+            "link_text": "Bekijk project"
+          }
+        },
+        {
+          "type": "project",
+          "settings": {
+            "title": "Compacte huissauna in Utrecht",
+            "description": "Een ruimtebesparende huissauna geïnstalleerd in de badkamer. Ideaal voor dagelijks gebruik zonder ruimteverlies.",
+            "location": "Utrecht, Utrecht",
+            "date": "Februari 2024",
+            "link_text": "Bekijk project"
+          }
+        },
+        {
+          "type": "project",
+          "settings": {
+            "title": "Red-Light setup in Rotterdam",
+            "description": "Een complete Red-Light therapie setup voor thuisgebruik. Perfect voor herstel en ontspanning.",
+            "location": "Rotterdam, Zuid-Holland",
+            "date": "Januari 2024",
+            "link_text": "Bekijk project"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

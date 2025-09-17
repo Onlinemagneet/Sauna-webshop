@@ -1,0 +1,483 @@
+{% comment %}
+  Hero Slider Section - Confronterende slides met sfeerbeelden
+{% endcomment %}
+
+<section class="hero-slider" id="hero-slider-{{ section.id }}">
+  <div class="hero-slider__container">
+    {% for block in section.blocks %}
+      <div class="hero-slider__slide {% if forloop.first %}active{% endif %}" {{ block.shopify_attributes }}>
+        {% if block.settings.video != blank %}
+          <div class="hero-slider__video">
+            <video 
+              autoplay 
+              muted 
+              loop 
+              playsinline
+              poster="{{ block.settings.image | image_url: '2000x' }}"
+            >
+              <source src="{{ block.settings.video }}" type="video/mp4">
+            </video>
+          </div>
+        {% elsif block.settings.image != blank %}
+          <div class="hero-slider__image">
+            <img 
+              src="{{ block.settings.image | image_url: '2000x' }}"
+              alt="{{ block.settings.heading | escape }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            >
+          </div>
+        {% endif %}
+        
+        <div class="hero-slider__content">
+          <div class="container">
+            <div class="hero-slider__text">
+              {% if block.settings.kicker != blank %}
+                <div class="kicker mb-2" style="color: {{ block.settings.kicker_color | default: 'var(--accent)' }};">{{ block.settings.kicker }}</div>
+              {% endif %}
+              
+              <h1 class="h0 mb-3" style="color: {{ block.settings.heading_color | default: 'white' }};">
+                {{ block.settings.heading }}
+              </h1>
+              
+              {% if block.settings.subheading != blank %}
+                <p class="hero-slider__subheading mb-4" style="color: {{ block.settings.subheading_color | default: 'rgba(255,255,255,0.9)' }};">
+                  {{ block.settings.subheading }}
+                </p>
+              {% endif %}
+              
+              {% if block.settings.proof_badge != blank %}
+                <div class="badge mb-4" style="background-color: {{ block.settings.badge_color | default: 'var(--highlight)' }}; color: {{ block.settings.badge_text_color | default: 'var(--primary)' }};">
+                  {{ block.settings.proof_badge }}
+                </div>
+              {% endif %}
+              
+              <div class="hero-slider__ctas">
+                {% if block.settings.cta_1_text != blank and block.settings.cta_1_url != blank %}
+                  <a href="{{ block.settings.cta_1_url }}" class="btn" style="background-color: {{ block.settings.cta_1_color | default: 'var(--accent)' }};">
+                    {{ block.settings.cta_1_text }}
+                  </a>
+                {% endif %}
+                
+                {% if block.settings.cta_2_text != blank and block.settings.cta_2_url != blank %}
+                  <a href="{{ block.settings.cta_2_url }}" class="btn btn-secondary" style="border-color: {{ block.settings.cta_2_color | default: 'white' }}; color: {{ block.settings.cta_2_color | default: 'white' }};">
+                    {{ block.settings.cta_2_text }}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <!-- Navigation -->
+  <div class="hero-slider__nav">
+    <button class="hero-slider__prev" aria-label="Vorige slide">‹</button>
+    <div class="hero-slider__dots">
+      {% for block in section.blocks %}
+        <button class="hero-slider__dot {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.index0 }}" aria-label="Ga naar slide {{ forloop.index }}"></button>
+      {% endfor %}
+    </div>
+    <button class="hero-slider__next" aria-label="Volgende slide">›</button>
+  </div>
+</section>
+
+<style>
+.hero-slider {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.hero-slider__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slider__slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.hero-slider__slide.active {
+  opacity: 1;
+}
+
+.hero-slider__video,
+.hero-slider__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slider__video video,
+.hero-slider__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-slider__content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(45deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
+}
+
+.hero-slider__text {
+  max-width: 800px;
+  text-align: center;
+}
+
+.hero-slider__subheading {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.hero-slider__ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-slider__nav {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 3;
+}
+
+.hero-slider__prev,
+.hero-slider__next {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.hero-slider__prev:hover,
+.hero-slider__next:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.hero-slider__dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.hero-slider__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hero-slider__dot.active {
+  background: white;
+  border-color: white;
+}
+
+.hero-slider__dot:hover {
+  border-color: white;
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 70vh;
+    min-height: 500px;
+  }
+  
+  .hero-slider__ctas {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero-slider__ctas .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .hero-slider__nav {
+    bottom: 1rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.getElementById('hero-slider-{{ section.id }}');
+  if (!slider) return;
+  
+  const slides = slider.querySelectorAll('.hero-slider__slide');
+  const dots = slider.querySelectorAll('.hero-slider__dot');
+  const prevBtn = slider.querySelector('.hero-slider__prev');
+  const nextBtn = slider.querySelector('.hero-slider__next');
+  
+  let currentSlide = 0;
+  let autoplayInterval;
+  
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+    currentSlide = index;
+  }
+  
+  function nextSlide() {
+    const next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+  }
+  
+  function prevSlide() {
+    const prev = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(prev);
+  }
+  
+  function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, 5000);
+  }
+  
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+  
+  // Event listeners
+  nextBtn.addEventListener('click', () => {
+    nextSlide();
+    stopAutoplay();
+    startAutoplay();
+  });
+  
+  prevBtn.addEventListener('click', () => {
+    prevSlide();
+    stopAutoplay();
+    startAutoplay();
+  });
+  
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      showSlide(index);
+      stopAutoplay();
+      startAutoplay();
+    });
+  });
+  
+  // Pause on hover
+  slider.addEventListener('mouseenter', stopAutoplay);
+  slider.addEventListener('mouseleave', startAutoplay);
+  
+  // Start autoplay
+  startAutoplay();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Hero Slider",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Kicker text",
+          "default": "Premium Sauna's"
+        },
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "<p>Stop met uitstellen.<br>Start met herstellen.</p>"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Diepe warmte. Rustige nachten. Verlichte spieren. Jouw herstelroutine begint hier."
+        },
+        {
+          "type": "text",
+          "id": "proof_badge",
+          "label": "Proof badge",
+          "default": "500+ Tevreden klanten"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "cta_1_text",
+          "label": "Primary CTA text",
+          "default": "Bekijk Barrelsauna's"
+        },
+        {
+          "type": "url",
+          "id": "cta_1_url",
+          "label": "Primary CTA URL",
+          "default": "/collections/barrelsauna"
+        },
+        {
+          "type": "text",
+          "id": "cta_2_text",
+          "label": "Secondary CTA text",
+          "default": "Ontdek Huissauna's"
+        },
+        {
+          "type": "url",
+          "id": "cta_2_url",
+          "label": "Secondary CTA URL",
+          "default": "/collections/huissauna"
+        },
+        {
+          "type": "header",
+          "content": "Media"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Background video (overrides image)"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "kicker_color",
+          "label": "Kicker color",
+          "default": "#E63946"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "subheading_color",
+          "label": "Subheading color",
+          "default": "rgba(255,255,255,0.9)"
+        },
+        {
+          "type": "color",
+          "id": "badge_color",
+          "label": "Badge background",
+          "default": "#FFD700"
+        },
+        {
+          "type": "color",
+          "id": "badge_text_color",
+          "label": "Badge text color",
+          "default": "#0E0E0E"
+        },
+        {
+          "type": "color",
+          "id": "cta_1_color",
+          "label": "Primary CTA color",
+          "default": "#E63946"
+        },
+        {
+          "type": "color",
+          "id": "cta_2_color",
+          "label": "Secondary CTA color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slider",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "kicker": "Premium Sauna's",
+            "heading": "<p>Stop met uitstellen.<br>Start met herstellen.</p>",
+            "subheading": "Diepe warmte. Rustige nachten. Verlichte spieren. Jouw herstelroutine begint hier.",
+            "proof_badge": "500+ Tevreden klanten",
+            "cta_1_text": "Bekijk Barrelsauna's",
+            "cta_1_url": "/collections/barrelsauna",
+            "cta_2_text": "Ontdek Huissauna's",
+            "cta_2_url": "/collections/huissauna"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "kicker": "Red-Light Therapie",
+            "heading": "<p>Licht dat aanzet tot herstel.<br>Minuten werk, effect de hele dag.</p>",
+            "subheading": "Wetenschappelijk bewezen voordelen voor huid, spieren en herstel. Thuis. Snel. Eenvoudig.",
+            "proof_badge": "4.9/5 sterren",
+            "cta_1_text": "Bekijk apparaten",
+            "cta_1_url": "/collections/red-light",
+            "cta_2_text": "Gratis advies",
+            "cta_2_url": "/pages/contact"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "kicker": "Gratis installatie",
+            "heading": "<p>Van bestelling tot genieten<br>in 4 weken.</p>",
+            "subheading": "Professionele installatie inbegrepen. 2 jaar garantie. 500+ tevreden klanten.",
+            "proof_badge": "2 jaar garantie",
+            "cta_1_text": "Bekijk alle sauna's",
+            "cta_1_url": "/collections",
+            "cta_2_text": "Vraag offerte",
+            "cta_2_url": "/pages/contact"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

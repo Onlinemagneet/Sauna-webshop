@@ -1,34 +1,58 @@
 {
   "sections": {
-    "duo": {
-      "type": "hero-duo"
+    "hero_slider": {
+      "type": "hero-slider"
     },
-    "belt": {
-      "type": "pricing-belt"
+    "hero_impact": {
+      "type": "hero-impact"
     },
-    "rl": {
-      "type": "rl-slider"
+    "social_proof": {
+      "type": "social-proof"
     },
-    "benefits": {
+    "product_showcase": {
+      "type": "product-showcase"
+    },
+    "benefit_pillars": {
       "type": "benefit-pillars"
     },
-    "compare": {
+    "hero_duo": {
+      "type": "hero-duo"
+    },
+    "pricing_belt": {
+      "type": "pricing-belt"
+    },
+    "process_steps": {
+      "type": "process-steps"
+    },
+    "before_after": {
+      "type": "before-after"
+    },
+    "redlight_grid": {
+      "type": "redlight-grid"
+    },
+    "compare_band": {
       "type": "compare-band"
     },
-    "socialproof": {
+    "testimonials": {
       "type": "testimonials"
     },
-    "faq": {
+    "faq_accordion": {
       "type": "faq-accordion"
     }
   },
   "order": [
-    "duo",
-    "belt",
-    "rl",
-    "benefits",
-    "compare",
-    "socialproof",
-    "faq"
+    "hero_slider",
+    "hero_impact",
+    "social_proof",
+    "product_showcase",
+    "benefit_pillars",
+    "hero_duo",
+    "pricing_belt",
+    "process_steps",
+    "before_after",
+    "redlight_grid",
+    "compare_band",
+    "testimonials",
+    "faq_accordion"
   ]
 }

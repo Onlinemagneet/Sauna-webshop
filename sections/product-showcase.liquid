@@ -1,0 +1,456 @@
+{% comment %}
+  Product Showcase Grid Section - Featured producten met filters
+{% endcomment %}
+
+<section class="product-showcase" style="background-color: {{ section.settings.bg_color | default: 'white' }};">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <div class="text-center mb-4">
+        <h2 class="h2" style="color: {{ section.settings.heading_color | default: 'var(--primary)' }};">{{ section.settings.heading }}</h2>
+        {% if section.settings.subheading != blank %}
+          <p class="product-showcase__subheading" style="color: {{ section.settings.subheading_color | default: 'var(--muted)' }};">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    <!-- Filters -->
+    <div class="product-showcase__filters">
+      <button class="filter-btn active" data-filter="all">Alle producten</button>
+      <button class="filter-btn" data-filter="barrelsauna">Barrelsauna's</button>
+      <button class="filter-btn" data-filter="huissauna">Huissauna's</button>
+      <button class="filter-btn" data-filter="red-light">Red-Light</button>
+    </div>
+    
+    <!-- Products Grid -->
+    <div class="product-showcase__grid">
+      {% for block in section.blocks %}
+        {% if block.settings.product != blank %}
+          <div class="product-card" data-category="{{ block.settings.category | default: 'all' }}" {{ block.shopify_attributes }}>
+            {% if block.settings.product.featured_image != blank %}
+              <div class="product-card__image">
+                <a href="{{ block.settings.product.url }}">
+                  <img 
+                    src="{{ block.settings.product.featured_image | image_url: '800x' }}"
+                    alt="{{ block.settings.product.title | escape }}"
+                    loading="lazy"
+                  >
+                </a>
+                
+                <!-- Badges -->
+                <div class="product-card__badges">
+                  {% if block.settings.badge_text != blank %}
+                    <span class="product-card__badge" style="background-color: {{ block.settings.badge_color | default: 'var(--accent)' }};">
+                      {{ block.settings.badge_text }}
+                    </span>
+                  {% endif %}
+                  
+                  {% if block.settings.product.compare_at_price > block.settings.product.price %}
+                    <span class="product-card__badge product-card__badge--sale">Sale</span>
+                  {% endif %}
+                </div>
+                
+                <!-- Quick View -->
+                <div class="product-card__quick-view">
+                  <button class="btn btn-secondary" onclick="openQuickView('{{ block.settings.product.id }}')">
+                    Quick View
+                  </button>
+                </div>
+              </div>
+            {% endif %}
+            
+            <div class="product-card__content">
+              <h3 class="product-card__title">
+                <a href="{{ block.settings.product.url }}">{{ block.settings.product.title }}</a>
+              </h3>
+              
+              {% if block.settings.product.description != blank %}
+                <p class="product-card__description">{{ block.settings.product.description | truncate: 100 }}</p>
+              {% endif %}
+              
+              <div class="product-card__price">
+                {% render 'price-inline', product: block.settings.product %}
+              </div>
+              
+              <div class="product-card__features">
+                {% if block.settings.feature_1 != blank %}
+                  <span class="product-card__feature">{{ block.settings.feature_1 }}</span>
+                {% endif %}
+                {% if block.settings.feature_2 != blank %}
+                  <span class="product-card__feature">{{ block.settings.feature_2 }}</span>
+                {% endif %}
+                {% if block.settings.feature_3 != blank %}
+                  <span class="product-card__feature">{{ block.settings.feature_3 }}</span>
+                {% endif %}
+              </div>
+              
+              <a href="{{ block.settings.product.url }}" class="btn btn-secondary">
+                {{ block.settings.cta_text | default: "Bekijk product" }}
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+    {% if section.settings.cta_text != blank and section.settings.cta_url != blank %}
+      <div class="text-center mt-4">
+        <a href="{{ section.settings.cta_url }}" class="btn">
+          {{ section.settings.cta_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+.product-showcase {
+  padding: 4rem 0;
+}
+
+.product-showcase__subheading {
+  font-size: 1.125rem;
+  margin-top: 1rem;
+}
+
+.product-showcase__filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 3rem 0;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--text);
+  background: transparent;
+  color: var(--text);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.product-showcase__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.product-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.product-card.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.product-card__image {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.product-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover .product-card__image img {
+  transform: scale(1.05);
+}
+
+.product-card__badges {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.product-card__badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: calc(var(--radius) / 2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+}
+
+.product-card__badge--sale {
+  background: var(--accent) !important;
+}
+
+.product-card__quick-view {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-card__quick-view {
+  opacity: 1;
+}
+
+.product-card__content {
+  padding: 1.5rem;
+}
+
+.product-card__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.product-card__title a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.product-card__title a:hover {
+  color: var(--accent);
+}
+
+.product-card__description {
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.product-card__price {
+  margin-bottom: 1rem;
+}
+
+.product-card__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.product-card__feature {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--bg);
+  color: var(--muted);
+  border-radius: calc(var(--radius) / 4);
+}
+
+@media (max-width: 768px) {
+  .product-showcase {
+    padding: 2rem 0;
+  }
+  
+  .product-showcase__filters {
+    margin: 2rem 0;
+  }
+  
+  .filter-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .product-showcase__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .product-card__content {
+    padding: 1rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const productCards = document.querySelectorAll('.product-card');
+  
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const filter = this.dataset.filter;
+      
+      // Update active button
+      filterBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Filter products
+      productCards.forEach(card => {
+        const category = card.dataset.category;
+        
+        if (filter === 'all' || category === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+});
+
+function openQuickView(productId) {
+  // Quick view functionality - can be enhanced with a modal
+  console.log('Quick view for product:', productId);
+  // You can implement a modal here
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product Showcase",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Onze top producten"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Kwaliteit die je voelt. Resultaten die je ziet."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#0E0E0E"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#666666"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Section CTA text",
+      "default": "Bekijk alle producten"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Section CTA URL",
+      "default": "/collections"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Product"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "category",
+          "label": "Category",
+          "options": [
+            { "value": "all", "label": "All" },
+            { "value": "barrelsauna", "label": "Barrelsauna" },
+            { "value": "huissauna", "label": "Huissauna" },
+            { "value": "red-light", "label": "Red-Light" }
+          ],
+          "default": "all"
+        },
+        {
+          "type": "header",
+          "content": "Badge"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge text",
+          "default": "Bestseller"
+        },
+        {
+          "type": "color",
+          "id": "badge_color",
+          "label": "Badge color",
+          "default": "#E63946"
+        },
+        {
+          "type": "header",
+          "content": "Features"
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Feature 1",
+          "default": "Gratis installatie"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Feature 2",
+          "default": "2 jaar garantie"
+        },
+        {
+          "type": "text",
+          "id": "feature_3",
+          "label": "Feature 3",
+          "default": "Snelle levering"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA text",
+          "default": "Bekijk product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Showcase"
+    }
+  ]
+}
+{% endschema %}

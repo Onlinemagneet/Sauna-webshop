@@ -1,0 +1,308 @@
+{% comment %}
+  Social Proof Bar Section - Trust badges en statistieken
+{% endcomment %}
+
+<section class="social-proof" style="background: linear-gradient(135deg, {{ section.settings.bg_color_1 | default: 'var(--primary)' }} 0%, {{ section.settings.bg_color_2 | default: 'var(--accent)' }} 100%);">
+  <div class="container">
+    <div class="social-proof__grid">
+      {% for block in section.blocks %}
+        <div class="social-proof__item" {{ block.shopify_attributes }}>
+          {% if block.settings.icon_image != blank %}
+            <div class="social-proof__icon">
+              <img 
+                src="{{ block.settings.icon_image | image_url: '100x' }}"
+                alt="{{ block.settings.title | escape }}"
+                loading="lazy"
+              >
+            </div>
+          {% elsif block.settings.icon_emoji != blank %}
+            <div class="social-proof__icon-emoji">{{ block.settings.icon_emoji }}</div>
+          {% endif %}
+          
+          <div class="social-proof__content">
+            <div class="social-proof__number" style="color: {{ block.settings.number_color | default: 'var(--highlight)' }};">
+              {{ block.settings.number }}
+            </div>
+            <div class="social-proof__title" style="color: {{ block.settings.title_color | default: 'white' }};">
+              {{ block.settings.title }}
+            </div>
+            {% if block.settings.subtitle != blank %}
+              <div class="social-proof__subtitle" style="color: {{ block.settings.subtitle_color | default: 'rgba(255,255,255,0.8)' }};">
+                {{ block.settings.subtitle }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.social-proof {
+  padding: 3rem 0;
+  color: white;
+}
+
+.social-proof__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  align-items: center;
+}
+
+.social-proof__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+}
+
+.social-proof__icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-proof__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.social-proof__icon-emoji {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.social-proof__content {
+  flex: 1;
+}
+
+.social-proof__number {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.social-proof__title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.social-proof__subtitle {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .social-proof {
+    padding: 2rem 0;
+  }
+  
+  .social-proof__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .social-proof__item {
+    text-align: center;
+    flex-direction: column;
+  }
+  
+  .social-proof__number {
+    font-size: 1.5rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Animate numbers on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const numberElement = entry.target.querySelector('.social-proof__number');
+        const finalNumber = parseInt(numberElement.textContent.replace(/\D/g, ''));
+        
+        if (finalNumber > 0) {
+          animateNumber(numberElement, 0, finalNumber, 2000);
+        }
+      }
+    });
+  });
+  
+  document.querySelectorAll('.social-proof__item').forEach(item => {
+    observer.observe(item);
+  });
+});
+
+function animateNumber(element, start, end, duration) {
+  const startTime = performance.now();
+  
+  function updateNumber(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    const current = Math.floor(start + (end - start) * progress);
+    element.textContent = element.textContent.replace(/\d+/, current);
+    
+    if (progress < 1) {
+      requestAnimationFrame(updateNumber);
+    }
+  }
+  
+  requestAnimationFrame(updateNumber);
+}
+</script>
+
+{% schema %}
+{
+  "name": "Social Proof Bar",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_1",
+      "label": "Background color 1",
+      "default": "#0E0E0E"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_2",
+      "label": "Background color 2",
+      "default": "#E63946"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "proof",
+      "name": "Social Proof Item",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "500+"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Tevreden klanten"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Sinds 2020"
+        },
+        {
+          "type": "header",
+          "content": "Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon image (overrides emoji)"
+        },
+        {
+          "type": "text",
+          "id": "icon_emoji",
+          "label": "Icon emoji",
+          "default": "⭐"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "number_color",
+          "label": "Number color",
+          "default": "#FFD700"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "subtitle_color",
+          "label": "Subtitle color",
+          "default": "rgba(255,255,255,0.8)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Proof Bar",
+      "blocks": [
+        {
+          "type": "proof",
+          "settings": {
+            "number": "500+",
+            "title": "Tevreden klanten",
+            "subtitle": "Sinds 2020",
+            "icon_emoji": "⭐"
+          }
+        },
+        {
+          "type": "proof",
+          "settings": {
+            "number": "4.9",
+            "title": "Sterren gemiddeld",
+            "subtitle": "Op Google Reviews",
+            "icon_emoji": "⭐"
+          }
+        },
+        {
+          "type": "proof",
+          "settings": {
+            "number": "Gratis",
+            "title": "Levering & installatie",
+            "subtitle": "In heel Nederland",
+            "icon_emoji": "🚚"
+          }
+        },
+        {
+          "type": "proof",
+          "settings": {
+            "number": "2 jaar",
+            "title": "Garantie",
+            "subtitle": "Op alle producten",
+            "icon_emoji": "🛡️"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
