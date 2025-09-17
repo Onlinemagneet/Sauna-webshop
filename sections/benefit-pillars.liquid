@@ -1,38 +1,42 @@
 {% comment %}
-  Benefit Pillars Section - 3-6 pijlers (spieren/slaap/stress/herstel)
+  Benefit Pillars Section - 4 pijlers
 {% endcomment %}
 
 <section class="benefit-pillars">
   <div class="container">
-    {% if section.settings.heading != blank %}
-      <div class="text-center mb-4">
-        <h2 class="h2">{{ section.settings.heading }}</h2>
-        {% if section.settings.subheading != blank %}
-          <p class="benefit-pillars__subheading">{{ section.settings.subheading }}</p>
-        {% endif %}
-      </div>
-    {% endif %}
+    <div class="text-center mb-4">
+      <h2 class="h2">Waarom een sauna?</h2>
+      <p class="benefit-pillars__subheading">De wetenschappelijk bewezen voordelen van regelmatig saunagebruik</p>
+    </div>
     
     <div class="benefit-pillars__grid">
-      {% for block in section.blocks %}
-        <div class="pillar" {{ block.shopify_attributes }}>
-          {% if block.settings.icon != blank %}
-            <div class="pillar__icon">
-              {{ block.settings.icon }}
-            </div>
-          {% endif %}
-          
-          <h3 class="pillar__title">{{ block.settings.title }}</h3>
-          
-          {% if block.settings.description != blank %}
-            <p class="pillar__description">{{ block.settings.description }}</p>
-          {% endif %}
-          
-          {% if block.settings.benefit != blank %}
-            <div class="pillar__benefit">{{ block.settings.benefit }}</div>
-          {% endif %}
-        </div>
-      {% endfor %}
+      <div class="pillar">
+        <div class="pillar__icon">💪</div>
+        <h3 class="pillar__title">Spierherstel</h3>
+        <p class="pillar__description">Verlicht gespannen spieren en versnelt herstel na training.</p>
+        <div class="pillar__benefit">Tot 40% sneller herstel</div>
+      </div>
+      
+      <div class="pillar">
+        <div class="pillar__icon">😴</div>
+        <h3 class="pillar__title">Betere slaap</h3>
+        <p class="pillar__description">Diepe ontspanning zorgt voor een rustigere nachtrust.</p>
+        <div class="pillar__benefit">Dieper slapen</div>
+      </div>
+      
+      <div class="pillar">
+        <div class="pillar__icon">🧘</div>
+        <h3 class="pillar__title">Stressreductie</h3>
+        <p class="pillar__description">Moment van rust en mindfulness in je eigen huis.</p>
+        <div class="pillar__benefit">Minder stress</div>
+      </div>
+      
+      <div class="pillar">
+        <div class="pillar__icon">❤️</div>
+        <h3 class="pillar__title">Hartgezondheid</h3>
+        <p class="pillar__description">Verbetert bloedsomloop en hartfunctie.</p>
+        <div class="pillar__benefit">Gezonder hart</div>
+      </div>
     </div>
   </div>
 </section>
@@ -117,100 +121,3 @@
   }
 }
 </style>
-
-{% schema %}
-{
-  "name": "Benefit Pillars",
-  "tag": "section",
-  "class": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Waarom een sauna?"
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "De wetenschappelijk bewezen voordelen van regelmatig saunagebruik"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "pillar",
-      "name": "Benefit Pillar",
-      "settings": [
-        {
-          "type": "text",
-          "id": "icon",
-          "label": "Icon (emoji)",
-          "default": "💪"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Spierherstel"
-        },
-        {
-          "type": "textarea",
-          "id": "description",
-          "label": "Description",
-          "default": "Verlicht gespannen spieren en versnelt herstel na training."
-        },
-        {
-          "type": "text",
-          "id": "benefit",
-          "label": "Benefit highlight",
-          "default": "Tot 40% sneller herstel"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Benefit Pillars",
-      "blocks": [
-        {
-          "type": "pillar",
-          "settings": {
-            "icon": "💪",
-            "title": "Spierherstel",
-            "description": "Verlicht gespannen spieren en versnelt herstel na training.",
-            "benefit": "Tot 40% sneller herstel"
-          }
-        },
-        {
-          "type": "pillar",
-          "settings": {
-            "icon": "😴",
-            "title": "Betere slaap",
-            "description": "Diepe ontspanning zorgt voor een rustigere nachtrust.",
-            "benefit": "Dieper slapen"
-          }
-        },
-        {
-          "type": "pillar",
-          "settings": {
-            "icon": "🧘",
-            "title": "Stressreductie",
-            "description": "Moment van rust en mindfulness in je eigen huis.",
-            "benefit": "Minder stress"
-          }
-        },
-        {
-          "type": "pillar",
-          "settings": {
-            "icon": "❤️",
-            "title": "Hartgezondheid",
-            "description": "Verbetert bloedsomloop en hartfunctie.",
-            "benefit": "Gezonder hart"
-          }
-        }
-      ]
-    }
-  ]
-}
-{% endschema %}

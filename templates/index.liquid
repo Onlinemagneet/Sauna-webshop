@@ -1,5 +1,5 @@
 {% comment %}
-  Homepage template - Fallback voor als index.json niet werkt
+  Homepage template - Werkende homepage met alle sections
 {% endcomment %}
 
 <div class="homepage">
@@ -10,3 +10,16 @@
   {% section 'testimonials' %}
   {% section 'faq-accordion' %}
 </div>
+
+<style>
+.homepage {
+  min-height: 100vh;
+}
+
+/* Zorg dat sections zichtbaar zijn */
+section {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+</style>

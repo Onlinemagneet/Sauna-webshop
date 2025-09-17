@@ -5,48 +5,28 @@
 <section class="hero-impact">
   <div class="container">
     <div class="hero-impact__content">
-      {% if section.settings.kicker != blank %}
-        <div class="kicker mb-2">{{ section.settings.kicker }}</div>
-      {% endif %}
+      <div class="kicker mb-2">Premium Sauna's</div>
       
       <h1 class="h0 mb-3">
-        {{ section.settings.heading | default: "Stop met uitstellen.<br>Start met herstellen." }}
+        Stop met uitstellen.<br>Start met herstellen.
       </h1>
       
-      {% if section.settings.subheading != blank %}
-        <p class="hero-impact__subheading mb-4">
-          {{ section.settings.subheading }}
-        </p>
-      {% endif %}
+      <p class="hero-impact__subheading mb-4">
+        Diepe warmte. Rustige nachten. Verlichte spieren. Jouw herstelroutine begint hier.
+      </p>
       
-      {% if section.settings.proof_badge != blank %}
-        <div class="badge mb-4">{{ section.settings.proof_badge }}</div>
-      {% endif %}
+      <div class="badge mb-4">500+ Tevreden klanten</div>
       
       <div class="hero-impact__ctas">
-        {% if section.settings.cta_1_text != blank and section.settings.cta_1_url != blank %}
-          <a href="{{ section.settings.cta_1_url }}" class="btn">
-            {{ section.settings.cta_1_text }}
-          </a>
-        {% endif %}
+        <a href="/collections/barrelsauna" class="btn">
+          Bekijk Barrelsauna's
+        </a>
         
-        {% if section.settings.cta_2_text != blank and section.settings.cta_2_url != blank %}
-          <a href="{{ section.settings.cta_2_url }}" class="btn btn-secondary">
-            {{ section.settings.cta_2_text }}
-          </a>
-        {% endif %}
+        <a href="/collections/huissauna" class="btn btn-secondary">
+          Ontdek Huissauna's
+        </a>
       </div>
     </div>
-    
-    {% if section.settings.background_image != blank %}
-      <div class="hero-impact__image">
-        <img 
-          src="{{ section.settings.background_image | image_url: width: 1200 }}"
-          alt="{{ section.settings.background_image.alt | escape }}"
-          loading="lazy"
-        >
-      </div>
-    {% endif %}
   </div>
 </section>
 
@@ -57,6 +37,9 @@
   background: linear-gradient(135deg, var(--bg) 0%, #f0f0f0 100%);
   position: relative;
   overflow: hidden;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
 }
 
 .hero-impact__content {
@@ -79,25 +62,10 @@
   flex-wrap: wrap;
 }
 
-.hero-impact__image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  opacity: 0.1;
-}
-
-.hero-impact__image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 @media (max-width: 768px) {
   .hero-impact {
     padding: 4rem 0;
+    min-height: 60vh;
   }
   
   .hero-impact__ctas {
@@ -111,71 +79,3 @@
   }
 }
 </style>
-
-{% schema %}
-{
-  "name": "Hero Impact",
-  "tag": "section",
-  "class": "section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "kicker",
-      "label": "Kicker text",
-      "default": "Premium Sauna's"
-    },
-    {
-      "type": "richtext",
-      "id": "heading",
-      "label": "Heading",
-      "default": "<p>Stop met uitstellen.<br>Start met herstellen.</p>"
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "Diepe warmte. Rustige nachten. Verlichte spieren. Jouw herstelroutine begint hier."
-    },
-    {
-      "type": "text",
-      "id": "proof_badge",
-      "label": "Proof badge",
-      "default": "500+ Tevreden klanten"
-    },
-    {
-      "type": "text",
-      "id": "cta_1_text",
-      "label": "Primary CTA text",
-      "default": "Bekijk Barrelsauna's"
-    },
-    {
-      "type": "url",
-      "id": "cta_1_url",
-      "label": "Primary CTA URL",
-      "default": "/collections/barrelsauna"
-    },
-    {
-      "type": "text",
-      "id": "cta_2_text",
-      "label": "Secondary CTA text",
-      "default": "Ontdek Huissauna's"
-    },
-    {
-      "type": "url",
-      "id": "cta_2_url",
-      "label": "Secondary CTA URL",
-      "default": "/collections/huissauna"
-    },
-    {
-      "type": "image_picker",
-      "id": "background_image",
-      "label": "Background image"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Hero Impact"
-    }
-  ]
-}
-{% endschema %}
