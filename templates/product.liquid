@@ -1,0 +1,93 @@
+{% comment %}
+  Product page template - Basis product pagina
+{% endcomment %}
+
+<div class="product-page">
+  <div class="container">
+    <div class="product-page__content">
+      <div class="product-page__images">
+        {% if product.featured_image %}
+          <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}">
+        {% endif %}
+      </div>
+      
+      <div class="product-page__info">
+        <h1 class="h1">{{ product.title }}</h1>
+        
+        <div class="product-page__price">
+          {% if product.compare_at_price > product.price %}
+            <span class="price-sale">{{ product.price | money }}</span>
+            <span class="price-compare">{{ product.compare_at_price | money }}</span>
+          {% else %}
+            <span class="price-regular">{{ product.price | money }}</span>
+          {% endif %}
+        </div>
+        
+        {% if product.description %}
+          <div class="product-page__description">
+            {{ product.description }}
+          </div>
+        {% endif %}
+        
+        <form action="/cart/add" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="btn">In winkelwagen</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.product-page {
+  padding: 4rem 0;
+}
+
+.product-page__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.product-page__images img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.product-page__price {
+  margin: 1rem 0;
+}
+
+.price-sale {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.price-compare {
+  font-size: 1.25rem;
+  color: var(--muted);
+  text-decoration: line-through;
+  margin-left: 0.5rem;
+}
+
+.price-regular {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.product-page__description {
+  margin: 1.5rem 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .product-page__content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+</style>
