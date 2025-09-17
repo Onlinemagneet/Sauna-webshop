@@ -1,0 +1,253 @@
+{% comment %}
+  Hero Duo Section - Links Sauna / Rechts Red-Light
+{% endcomment %}
+
+<section class="hero-duo">
+  <div class="container">
+    <div class="hero-duo__grid">
+      <!-- Sauna Panel -->
+      <div class="hero-duo__panel hero-duo__panel--sauna">
+        {% if section.settings.sauna_image != blank %}
+          <div class="hero-duo__image">
+            <img 
+              src="{{ section.settings.sauna_image | image_url: '1200x' }}"
+              alt="{{ section.settings.sauna_title | escape }}"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+        
+        <div class="hero-duo__content">
+          <h2 class="hero-duo__title">{{ section.settings.sauna_title | default: "Barrelsauna" }}</h2>
+          <p class="hero-duo__text">{{ section.settings.sauna_text | default: "Diepe warmte. Buitenlucht. Reset lichaam & hoofd." }}</p>
+          
+          <div class="hero-duo__price">
+            {% if section.settings.sauna_product != blank %}
+              Vanaf {{ section.settings.sauna_product.price | money }}
+            {% else %}
+              {{ section.settings.sauna_price_label | default: "Vanaf €3.450" }}
+            {% endif %}
+          </div>
+          
+          <a href="{% if section.settings.sauna_product != blank %}{{ section.settings.sauna_product.url }}{% else %}{{ section.settings.sauna_cta_url }}{% endif %}" class="btn">
+            {{ section.settings.sauna_cta | default: "Bekijk Barrelsauna" }}
+          </a>
+        </div>
+      </div>
+      
+      <!-- Red-Light Panel -->
+      <div class="hero-duo__panel hero-duo__panel--redlight">
+        {% if section.settings.rl_image != blank %}
+          <div class="hero-duo__image">
+            <img 
+              src="{{ section.settings.rl_image | image_url: '1200x' }}"
+              alt="{{ section.settings.rl_title | escape }}"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+        
+        <div class="hero-duo__content">
+          <h2 class="hero-duo__title">{{ section.settings.rl_title | default: "Red-Light Therapie" }}</h2>
+          <p class="hero-duo__text">{{ section.settings.rl_text | default: "Licht dat aanzet tot herstel. Minuten werk, effect de hele dag." }}</p>
+          
+          <div class="hero-duo__price">
+            {% if section.settings.rl_product != blank %}
+              Vanaf {{ section.settings.rl_product.price | money }}
+            {% else %}
+              {{ section.settings.rl_price_label | default: "Vanaf €249" }}
+            {% endif %}
+          </div>
+          
+          <a href="{% if section.settings.rl_product != blank %}{{ section.settings.rl_product.url }}{% else %}{{ section.settings.rl_cta_url }}{% endif %}" class="btn">
+            {{ section.settings.rl_cta | default: "Bekijk apparaten" }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero-duo {
+  padding: 4rem 0;
+  background: var(--primary);
+  color: white;
+}
+
+.hero-duo__grid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 2rem;
+  min-height: 60vh;
+}
+
+.hero-duo__panel {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-duo__image {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+
+.hero-duo__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-duo__content {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-duo__title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.hero-duo__text {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.hero-duo__price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--highlight);
+  margin-bottom: 2rem;
+}
+
+.hero-duo__panel--redlight {
+  background: rgba(230, 57, 70, 0.1);
+}
+
+@media (max-width: 900px) {
+  .hero-duo__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .hero-duo__content {
+    padding: 1.5rem;
+  }
+  
+  .hero-duo__title {
+    font-size: 2rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Hero Duo",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Sauna Panel"
+    },
+    {
+      "type": "image_picker",
+      "id": "sauna_image",
+      "label": "Sauna image"
+    },
+    {
+      "type": "text",
+      "id": "sauna_title",
+      "label": "Sauna title",
+      "default": "Barrelsauna"
+    },
+    {
+      "type": "textarea",
+      "id": "sauna_text",
+      "label": "Sauna text",
+      "default": "Diepe warmte. Buitenlucht. Reset lichaam & hoofd."
+    },
+    {
+      "type": "product",
+      "id": "sauna_product",
+      "label": "Sauna product"
+    },
+    {
+      "type": "text",
+      "id": "sauna_price_label",
+      "label": "Sauna price label",
+      "default": "Vanaf €3.450"
+    },
+    {
+      "type": "url",
+      "id": "sauna_cta_url",
+      "label": "Sauna CTA URL"
+    },
+    {
+      "type": "text",
+      "id": "sauna_cta",
+      "label": "Sauna CTA text",
+      "default": "Bekijk Barrelsauna"
+    },
+    {
+      "type": "header",
+      "content": "Red-Light Panel"
+    },
+    {
+      "type": "image_picker",
+      "id": "rl_image",
+      "label": "Red-Light image"
+    },
+    {
+      "type": "text",
+      "id": "rl_title",
+      "label": "Red-Light title",
+      "default": "Red-Light Therapie"
+    },
+    {
+      "type": "textarea",
+      "id": "rl_text",
+      "label": "Red-Light text",
+      "default": "Licht dat aanzet tot herstel. Minuten werk, effect de hele dag."
+    },
+    {
+      "type": "product",
+      "id": "rl_product",
+      "label": "Red-Light product"
+    },
+    {
+      "type": "text",
+      "id": "rl_price_label",
+      "label": "Red-Light price label",
+      "default": "Vanaf €249"
+    },
+    {
+      "type": "url",
+      "id": "rl_cta_url",
+      "label": "Red-Light CTA URL"
+    },
+    {
+      "type": "text",
+      "id": "rl_cta",
+      "label": "Red-Light CTA text",
+      "default": "Bekijk apparaten"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Duo (Sauna + Red-Light)"
+    }
+  ]
+}
+{% endschema %}

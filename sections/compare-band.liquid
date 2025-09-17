@@ -1,0 +1,219 @@
+{% comment %}
+  Compare Band Section - Barrelsauna vs Huissauna vergelijking
+{% endcomment %}
+
+<section class="compare-band">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <div class="text-center mb-4">
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+      </div>
+    {% endif %}
+    
+    <div class="compare-table">
+      <div class="compare-table__header">
+        <div class="compare-table__cell compare-table__cell--label"></div>
+        <div class="compare-table__cell compare-table__cell--col">{{ section.settings.col_a | default: "Barrelsauna" }}</div>
+        <div class="compare-table__cell compare-table__cell--col">{{ section.settings.col_b | default: "Huissauna" }}</div>
+      </div>
+      
+      {% for block in section.blocks %}
+        <div class="compare-table__row" {{ block.shopify_attributes }}>
+          <div class="compare-table__cell compare-table__cell--label">
+            {{ block.settings.label }}
+          </div>
+          <div class="compare-table__cell compare-table__cell--col">
+            {{ block.settings.col_a }}
+          </div>
+          <div class="compare-table__cell compare-table__cell--col">
+            {{ block.settings.col_b }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.compare-band {
+  padding: 4rem 0;
+  background: white;
+}
+
+.compare-table {
+  max-width: 800px;
+  margin: 3rem auto 0;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.compare-table__header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: var(--primary);
+  color: white;
+}
+
+.compare-table__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.compare-table__row:last-child {
+  border-bottom: none;
+}
+
+.compare-table__cell {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.compare-table__cell--label {
+  font-weight: 600;
+  color: var(--primary);
+  background: #f8f9fa;
+}
+
+.compare-table__cell--col {
+  text-align: center;
+  color: var(--text);
+}
+
+.compare-table__row:nth-child(even) .compare-table__cell--col {
+  background: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+  .compare-band {
+    padding: 2rem 0;
+  }
+  
+  .compare-table {
+    margin-top: 2rem;
+  }
+  
+  .compare-table__cell {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .compare-table__header {
+    grid-template-columns: 1fr;
+  }
+  
+  .compare-table__row {
+    grid-template-columns: 1fr;
+  }
+  
+  .compare-table__cell--label {
+    font-weight: 700;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .compare-table__cell--col {
+    text-align: left;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Compare Band",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Wat past bij jou?"
+    },
+    {
+      "type": "text",
+      "id": "col_a",
+      "label": "Column A title",
+      "default": "Barrelsauna"
+    },
+    {
+      "type": "text",
+      "id": "col_b",
+      "label": "Column B title",
+      "default": "Huissauna"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Row label"
+        },
+        {
+          "type": "text",
+          "id": "col_a",
+          "label": "Column A content"
+        },
+        {
+          "type": "text",
+          "id": "col_b",
+          "label": "Column B content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vergelijking",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "label": "Plaatsing",
+            "col_a": "Buiten",
+            "col_b": "Binnen"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Ruimte",
+            "col_a": "Meer",
+            "col_b": "Minder"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Warmtegevoel",
+            "col_a": "Intens, droog",
+            "col_b": "Constante, gecontroleerde"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Onderhoud",
+            "col_a": "Laag",
+            "col_b": "Laag"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Beleving",
+            "col_a": "Buitenlucht + ritueel",
+            "col_b": "Compact & direct"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

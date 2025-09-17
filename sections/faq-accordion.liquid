@@ -1,5 +1,5 @@
 {% comment %}
-  FAQ Accordion Section - FAQ sectie met accordion functionaliteit
+  FAQ Accordion Section - Toegankelijke accordion met default Q&A
 {% endcomment %}
 
 <section class="faq-accordion">
@@ -7,9 +7,6 @@
     {% if section.settings.heading != blank %}
       <div class="text-center mb-4">
         <h2 class="h2">{{ section.settings.heading }}</h2>
-        {% if section.settings.subheading != blank %}
-          <p class="faq-accordion__subheading">{{ section.settings.subheading }}</p>
-        {% endif %}
       </div>
     {% endif %}
     
@@ -35,12 +32,6 @@
 .faq-accordion {
   padding: 4rem 0;
   background: white;
-}
-
-.faq-accordion__subheading {
-  font-size: 1.125rem;
-  color: var(--muted);
-  margin-top: 1rem;
 }
 
 .faq-accordion__list {
@@ -129,16 +120,6 @@
   margin-bottom: 0;
 }
 
-.faq-item__content ul,
-.faq-item__content ol {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-
-.faq-item__content li {
-  margin-bottom: 0.5rem;
-}
-
 @media (max-width: 768px) {
   .faq-accordion {
     padding: 2rem 0;
@@ -170,12 +151,6 @@
       "id": "heading",
       "label": "Heading",
       "default": "Veelgestelde vragen"
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "Alles wat je moet weten over onze sauna's en Red-Light therapie apparaten."
     }
   ],
   "blocks": [
@@ -186,62 +161,46 @@
         {
           "type": "text",
           "id": "question",
-          "label": "Question",
-          "default": "Hoe lang duurt de levering?"
+          "label": "Question"
         },
         {
           "type": "richtext",
           "id": "answer",
-          "label": "Answer",
-          "default": "<p>De levering duurt 2-4 weken na bestelling. We houden je op de hoogte van de status via email.</p>"
+          "label": "Answer"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "FAQ Accordion",
+      "name": "FAQ",
       "blocks": [
         {
           "type": "faq",
           "settings": {
-            "question": "Hoe lang duurt de levering?",
-            "answer": "<p>De levering duurt 2-4 weken na bestelling. We houden je op de hoogte van de status via email.</p>"
+            "question": "Wat is de levertijd?",
+            "answer": "<p>Gemiddeld 4–6 weken, afhankelijk van configuratie en voorraad.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
-            "question": "Is installatie inbegrepen?",
-            "answer": "<p>Ja, professionele installatie is inbegrepen bij alle sauna's. Onze monteurs komen bij je thuis om alles perfect in te stellen.</p>"
+            "question": "Plaatsen jullie ook?",
+            "answer": "<p>Ja. Montage-informatie volgt na bestelling; opties in de checkout.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
-            "question": "Welke garantie krijg ik?",
-            "answer": "<p>Alle sauna's hebben 2 jaar garantie op constructie en 5 jaar op de verwarmingselementen. Red-Light apparaten hebben 3 jaar garantie.</p>"
+            "question": "Hoe onderhoud ik de sauna?",
+            "answer": "<p>Ventileren na gebruik, af en toe reinigen. Handleiding bijgeleverd.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
-            "question": "Kan ik de sauna buiten plaatsen?",
-            "answer": "<p>Barrelsauna's zijn speciaal ontworpen voor buiten. Huissauna's zijn bedoeld voor binnen. We adviseren je graag over de beste locatie.</p>"
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Hoeveel stroom verbruikt een sauna?",
-            "answer": "<p>Een gemiddelde sauna verbruikt 3-6 kW tijdens opwarmen en 1-2 kW tijdens gebruik. Dit komt neer op ongeveer €2-4 per sessie.</p>"
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Wat is Red-Light therapie?",
-            "answer": "<p>Red-Light therapie gebruikt specifieke golflengten van licht om celregeneratie te stimuleren. Wetenschappelijk bewezen voor huid, spieren en herstel.</p>"
+            "question": "Is rood licht veilig?",
+            "answer": "<p>Gebruik zoals voorgeschreven. Vermijd direct in de bron kijken; volg de handleiding.</p>"
           }
         }
       ]

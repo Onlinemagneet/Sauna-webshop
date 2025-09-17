@@ -1,5 +1,5 @@
 {% comment %}
-  Testimonials Section - Slider met 4-8 citaten
+  Testimonials Section - Horizontale slider met default quotes
 {% endcomment %}
 
 <section class="testimonials">
@@ -19,29 +19,29 @@
           <div class="testimonial" {{ block.shopify_attributes }}>
             <div class="testimonial__content">
               {% if block.settings.quote != blank %}
-                <blockquote class="testimonial__quote">
-                  "{{ block.settings.quote }}"
-                </blockquote>
+                <div class="testimonial__quote">
+                  {{ block.settings.quote }}
+                </div>
               {% endif %}
               
               <div class="testimonial__author">
                 {% if block.settings.author_image != blank %}
                   <div class="testimonial__avatar">
                     <img 
-                      src="{{ block.settings.author_image | image_url: width: 80 }}"
-                      alt="{{ block.settings.author_name | escape }}"
+                      src="{{ block.settings.author_image | image_url: '80x' }}"
+                      alt="{{ block.settings.author | escape }}"
                       loading="lazy"
                     >
                   </div>
                 {% endif %}
                 
                 <div class="testimonial__info">
-                  {% if block.settings.author_name != blank %}
-                    <div class="testimonial__name">{{ block.settings.author_name }}</div>
+                  {% if block.settings.author != blank %}
+                    <div class="testimonial__name">{{ block.settings.author }}</div>
                   {% endif %}
                   
-                  {% if block.settings.author_title != blank %}
-                    <div class="testimonial__title">{{ block.settings.author_title }}</div>
+                  {% if block.settings.meta != blank %}
+                    <div class="testimonial__meta">{{ block.settings.meta }}</div>
                   {% endif %}
                   
                   {% if block.settings.rating != blank %}
@@ -96,8 +96,12 @@
   font-size: 1.125rem;
   line-height: 1.6;
   color: var(--text);
-  margin: 0 0 1.5rem 0;
+  margin-bottom: 1.5rem;
   font-style: italic;
+}
+
+.testimonial__quote p {
+  margin: 0;
 }
 
 .testimonial__author {
@@ -126,7 +130,7 @@
   margin-bottom: 0.25rem;
 }
 
-.testimonial__title {
+.testimonial__meta {
   font-size: 0.875rem;
   color: var(--muted);
   margin-bottom: 0.5rem;
@@ -178,37 +182,34 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Wat onze klanten zeggen"
+      "default": "Echte mensen. Echte rust."
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Echte verhalen van echte mensen die hun leven hebben veranderd met onze sauna's."
+      "default": "Ervaringen van sporters, ouders, nachtwerkers — en iedereen die beter wil herstellen."
     }
   ],
   "blocks": [
     {
-      "type": "testimonial",
+      "type": "quote",
       "name": "Testimonial",
       "settings": [
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "quote",
-          "label": "Quote",
-          "default": "Sinds ik de sauna heb, slaap ik veel beter en voel ik me energieker. Een echte game-changer!"
+          "label": "Quote"
         },
         {
           "type": "text",
-          "id": "author_name",
-          "label": "Author name",
-          "default": "Sarah van der Berg"
+          "id": "author",
+          "label": "Author name"
         },
         {
           "type": "text",
-          "id": "author_title",
-          "label": "Author title",
-          "default": "Fitness trainer"
+          "id": "meta",
+          "label": "Author meta"
         },
         {
           "type": "image_picker",
@@ -232,38 +233,29 @@
       "name": "Testimonials",
       "blocks": [
         {
-          "type": "testimonial",
+          "type": "quote",
           "settings": {
-            "quote": "Sinds ik de sauna heb, slaap ik veel beter en voel ik me energieker. Een echte game-changer!",
-            "author_name": "Sarah van der Berg",
-            "author_title": "Fitness trainer",
+            "quote": "<p>Beste aankoop voor mijn herstelroutine. Na 15 min ben ik zen.</p>",
+            "author": "Anouk",
+            "meta": "Triatleet",
             "rating": 5
           }
         },
         {
-          "type": "testimonial",
+          "type": "quote",
           "settings": {
-            "quote": "Perfecte kwaliteit en snelle levering. De barrelsauna ziet er prachtig uit in onze tuin.",
-            "author_name": "Mark Janssen",
-            "author_title": "Huisvader",
+            "quote": "<p>Ik slaap sneller in en word minder vaak wakker. Dit is goud.</p>",
+            "author": "Jasper",
+            "meta": "Vader van twee",
             "rating": 5
           }
         },
         {
-          "type": "testimonial",
+          "type": "quote",
           "settings": {
-            "quote": "De huissauna past perfect in onze badkamer. Elke dag even ontspannen na het werk.",
-            "author_name": "Lisa de Vries",
-            "author_title": "Ondernemer",
-            "rating": 5
-          }
-        },
-        {
-          "type": "testimonial",
-          "settings": {
-            "quote": "Red-Light therapie heeft mijn huid echt verbeterd. Zichtbaar resultaat na 4 weken!",
-            "author_name": "Emma Bakker",
-            "author_title": "Schoonheidsspecialiste",
+            "quote": "<p>Rood licht = focus. Ochtendritueel van 8 minuten en gaan.</p>",
+            "author": "Mila",
+            "meta": "Founder",
             "rating": 5
           }
         }

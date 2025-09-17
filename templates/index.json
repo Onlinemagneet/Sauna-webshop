@@ -1,76 +1,34 @@
 {
   "sections": {
-    "hero_impact": {
-      "type": "hero-impact",
-      "settings": {
-        "kicker": "Premium Sauna's",
-        "heading": "<p>Stop met uitstellen.<br>Start met herstellen.</p>",
-        "subheading": "Diepe warmte. Rustige nachten. Verlichte spieren. Jouw herstelroutine begint hier.",
-        "proof_badge": "500+ Tevreden klanten",
-        "cta_1_text": "Bekijk Barrelsauna's",
-        "cta_1_url": "/collections/barrelsauna",
-        "cta_2_text": "Ontdek Huissauna's",
-        "cta_2_url": "/collections/huissauna"
-      }
+    "duo": {
+      "type": "hero-duo"
     },
-    "benefit_pillars": {
-      "type": "benefit-pillars",
-      "settings": {
-        "heading": "Waarom een sauna?",
-        "subheading": "De wetenschappelijk bewezen voordelen van regelmatig saunagebruik"
-      }
+    "belt": {
+      "type": "pricing-belt"
     },
-    "hero_split": {
-      "type": "hero-split",
-      "settings": {
-        "heading": "Kies jouw perfecte sauna",
-        "subheading": "Buiten of binnen, traditioneel of modern. Vind de sauna die bij jouw levensstijl past.",
-        "barrel_kicker": "Buitensauna",
-        "barrel_title": "Barrelsauna",
-        "barrel_description": "Traditionele ronde vorm, optimale warmteverdeling. Perfect voor in de tuin.",
-        "barrel_features": "Ronde vorm, Natuurlijke houtsoorten, Weerbestendig, Eenvoudige montage",
-        "barrel_cta_text": "Bekijk barrelsauna's",
-        "barrel_cta_url": "/collections/barrelsauna",
-        "indoor_kicker": "Binnensauna",
-        "indoor_title": "Huissauna",
-        "indoor_description": "Moderne rechthoekige vorm, perfect voor binnen. Maximale ruimtebenutting.",
-        "indoor_features": "Rechthoekige vorm, Moderne afwerking, Binnen installatie, Ruimtebesparend",
-        "indoor_cta_text": "Bekijk huissauna's",
-        "indoor_cta_url": "/collections/huissauna"
-      }
+    "rl": {
+      "type": "rl-slider"
     },
-    "redlight_grid": {
-      "type": "redlight-grid",
-      "settings": {
-        "heading": "Red-Light Therapie",
-        "subheading": "Krachtige LED-apparaten voor thuis. Wetenschappelijk bewezen voordelen voor huid, spieren en herstel.",
-        "products_to_show": 6,
-        "button_text": "Bekijk product",
-        "cta_text": "Bekijk alle Red-Light producten",
-        "cta_url": "/collections/red-light"
-      }
+    "benefits": {
+      "type": "benefit-pillars"
     },
-    "testimonials": {
-      "type": "testimonials",
-      "settings": {
-        "heading": "Wat onze klanten zeggen",
-        "subheading": "Echte verhalen van echte mensen die hun leven hebben veranderd met onze sauna's."
-      }
+    "compare": {
+      "type": "compare-band"
     },
-    "faq_accordion": {
-      "type": "faq-accordion",
-      "settings": {
-        "heading": "Veelgestelde vragen",
-        "subheading": "Alles wat je moet weten over onze sauna's en Red-Light therapie apparaten."
-      }
+    "socialproof": {
+      "type": "testimonials"
+    },
+    "faq": {
+      "type": "faq-accordion"
     }
   },
   "order": [
-    "hero_impact",
-    "benefit_pillars",
-    "hero_split",
-    "redlight_grid",
-    "testimonials",
-    "faq_accordion"
+    "duo",
+    "belt",
+    "rl",
+    "benefits",
+    "compare",
+    "socialproof",
+    "faq"
   ]
 }

@@ -1,0 +1,156 @@
+{% comment %}
+  Pricing Belt Section - 3 prijsitems naast elkaar
+{% endcomment %}
+
+<section class="pricing-belt">
+  <div class="container">
+    <div class="pricing-belt__grid">
+      {% for block in section.blocks %}
+        <div class="pricing-item" {{ block.shopify_attributes }}>
+          <h3 class="pricing-item__label">{{ block.settings.label }}</h3>
+          <p class="pricing-item__sub">{{ block.settings.sub }}</p>
+          
+          <div class="pricing-item__price">
+            {% if block.settings.product != blank %}
+              Vanaf {{ block.settings.product.price | money }}
+            {% else %}
+              {{ block.settings.price_fallback }}
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.pricing-belt {
+  padding: 3rem 0;
+  background: var(--primary);
+  color: white;
+}
+
+.pricing-belt__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.pricing-item {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  transition: transform 0.2s ease;
+}
+
+.pricing-item:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.pricing-item__label {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-item__sub {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+.pricing-item__price {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--highlight);
+}
+
+@media (max-width: 768px) {
+  .pricing-belt__grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .pricing-item {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .pricing-belt__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Pricing Belt",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "price",
+      "name": "Price Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Product"
+        },
+        {
+          "type": "text",
+          "id": "sub",
+          "label": "Subtitle",
+          "default": "Description"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "price_fallback",
+          "label": "Price fallback",
+          "default": "Vanaf €0"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pricing Belt",
+      "blocks": [
+        {
+          "type": "price",
+          "settings": {
+            "label": "Barrelsauna",
+            "sub": "Houtgestookt of elektrisch",
+            "price_fallback": "Vanaf €3.450"
+          }
+        },
+        {
+          "type": "price",
+          "settings": {
+            "label": "Huissauna",
+            "sub": "Compact, plaatsing in 1 dag",
+            "price_fallback": "Vanaf €5.990"
+          }
+        },
+        {
+          "type": "price",
+          "settings": {
+            "label": "Red-Light",
+            "sub": "Sessies in minuten",
+            "price_fallback": "Vanaf €249"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

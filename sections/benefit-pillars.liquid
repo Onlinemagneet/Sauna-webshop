@@ -1,56 +1,53 @@
 {% comment %}
-  Benefit Pillars Section - 4 pijlers
+  Benefit Pillars Section - Probleem→oplossing met krachtige copy
 {% endcomment %}
 
 <section class="benefit-pillars">
   <div class="container">
     <div class="text-center mb-4">
-      <h2 class="h2">Waarom een sauna?</h2>
-      <p class="benefit-pillars__subheading">De wetenschappelijk bewezen voordelen van regelmatig saunagebruik</p>
+      <h2 class="h2">{{ section.settings.heading | default: "Jij wil resultaat, geen ruis" }}</h2>
+      <p class="benefit-pillars__subheading">{{ section.settings.subheading | default: "Confronterend eerlijk: je lichaam heeft herstel nodig. Warmte en rood licht helpen je te ontspannen en beter te slapen — zonder poespas." }}</p>
     </div>
     
     <div class="benefit-pillars__grid">
-      <div class="pillar">
-        <div class="pillar__icon">💪</div>
-        <h3 class="pillar__title">Spierherstel</h3>
-        <p class="pillar__description">Verlicht gespannen spieren en versnelt herstel na training.</p>
-        <div class="pillar__benefit">Tot 40% sneller herstel</div>
-      </div>
-      
-      <div class="pillar">
-        <div class="pillar__icon">😴</div>
-        <h3 class="pillar__title">Betere slaap</h3>
-        <p class="pillar__description">Diepe ontspanning zorgt voor een rustigere nachtrust.</p>
-        <div class="pillar__benefit">Dieper slapen</div>
-      </div>
-      
-      <div class="pillar">
-        <div class="pillar__icon">🧘</div>
-        <h3 class="pillar__title">Stressreductie</h3>
-        <p class="pillar__description">Moment van rust en mindfulness in je eigen huis.</p>
-        <div class="pillar__benefit">Minder stress</div>
-      </div>
-      
-      <div class="pillar">
-        <div class="pillar__icon">❤️</div>
-        <h3 class="pillar__title">Hartgezondheid</h3>
-        <p class="pillar__description">Verbetert bloedsomloop en hartfunctie.</p>
-        <div class="pillar__benefit">Gezonder hart</div>
-      </div>
+      {% for block in section.blocks %}
+        <div class="pillar" {{ block.shopify_attributes }}>
+          <h3 class="pillar__title">{{ block.settings.title }}</h3>
+          
+          {% if block.settings.body != blank %}
+            <div class="pillar__body">{{ block.settings.body }}</div>
+          {% endif %}
+          
+          {% if block.settings.link_url != blank and block.settings.link_label != blank %}
+            <a href="{{ block.settings.link_url }}" class="btn btn-secondary">
+              {{ block.settings.link_label }}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
     </div>
+    
+    {% if section.settings.note != blank %}
+      <div class="benefit-pillars__note">
+        <p>{{ section.settings.note }}</p>
+      </div>
+    {% endif %}
   </div>
 </section>
 
 <style>
 .benefit-pillars {
   padding: 4rem 0;
-  background: white;
+  background: var(--bg);
 }
 
 .benefit-pillars__subheading {
   font-size: 1.125rem;
   color: var(--muted);
   margin-top: 1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .benefit-pillars__grid {
@@ -61,48 +58,51 @@
 }
 
 .pillar {
-  text-align: center;
-  padding: 2rem 1rem;
+  background: white;
+  padding: 2rem;
   border-radius: var(--radius);
-  transition: transform 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .pillar:hover {
   transform: translateY(-4px);
-}
-
-.pillar__icon {
-  width: 4rem;
-  height: 4rem;
-  margin: 0 auto 1.5rem;
-  background: var(--accent);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 .pillar__title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
   color: var(--primary);
 }
 
-.pillar__description {
-  color: var(--muted);
+.pillar__body {
+  color: var(--text);
   line-height: 1.6;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.pillar__benefit {
-  font-weight: 600;
-  color: var(--accent);
+.pillar__body p {
+  margin-bottom: 0.5rem;
+}
+
+.pillar__body p:last-child {
+  margin-bottom: 0;
+}
+
+.benefit-pillars__note {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.benefit-pillars__note p {
+  color: var(--muted);
   font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  margin: 0;
 }
 
 @media (max-width: 768px) {
@@ -117,7 +117,98 @@
   }
   
   .pillar {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem;
   }
 }
 </style>
+
+{% schema %}
+{
+  "name": "Benefit Pillars",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Jij wil resultaat, geen ruis"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Confronterend eerlijk: je lichaam heeft herstel nodig. Warmte en rood licht helpen je te ontspannen en beter te slapen — zonder poespas."
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Note",
+      "default": "Let op: geen medische claims. Beleving verschilt per persoon."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Benefit Pillar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefit Pillars",
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Spieren los, hoofd leeg",
+            "body": "<p>Warmte dringt diep door. Spanning zakt. Je houding ademt rust.</p>"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Slaap die blijft",
+            "body": "<p>Een warm ritueel vóór het slapen. Je valt sneller in en wordt frisser wakker.</p>"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Focus & energie",
+            "body": "<p>Rood licht als reset. Korte sessies, lange focus.</p>"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Routine die vol te houden is",
+            "body": "<p>Thuis. Snel. Eenvoudig. Geen gedoe met abonnementen of reistijd.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
